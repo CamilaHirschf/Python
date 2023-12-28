@@ -12,15 +12,17 @@ def create_app():
 
    # Ruta de registro
    @app.route('/register', methods=['GET', 'POST'])
-   def signup_user(): 
+   def signup_user():
+      return 'Registration page'
     # Tu código para registrar al usuario va aquí
-      pass
+     
 
    # Ruta de login
    @app.route('/login', methods=['GET', 'POST']) 
-   def login_user(): 
+   def login_user():
+      return 'Login page'
     # Tu código para iniciar sesión va aquí
-      pass
+   
 
    return app
 
