@@ -14,11 +14,13 @@ def create_app():
    @app.route('/register', methods=['GET', 'POST'])
    def signup_user(): 
     # Tu código para registrar al usuario va aquí
+      pass
 
    # Ruta de login
    @app.route('/login', methods=['GET', 'POST']) 
    def login_user(): 
     # Tu código para iniciar sesión va aquí
+      pass
 
    return app
 
