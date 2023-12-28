@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
-app = Flask(__name__)
+def create_app():
+ app = Flask(__name__)
 
 # Configuración de seguridad
 app.config.update(
