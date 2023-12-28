@@ -13,12 +13,14 @@ app.config.update(
 
 # Ruta de registro
 @app.route('/register', methods=['GET', 'POST'])
-def signup_user(): 
+def signup_user():
+ pass
  # Tu código para registrar al usuario va aquí
 
 # Ruta de login
 @app.route('/login', methods=['GET', 'POST']) 
-def login_user(): 
+def login_user():
+ pass
  # Tu código para iniciar sesión va aquí
 
 if __name__ == "__main__":
