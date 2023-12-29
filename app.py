@@ -1,8 +1,10 @@
 from flask import Flask
+from flask_wtf.csrf import CSRFProtect
 
 
 def create_app():
    app = Flask(__name__)
+   csrf = CSRFProtect(app)
 
    # Configuración de seguridad
    app.config.update(
