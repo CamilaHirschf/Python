@@ -11,7 +11,7 @@ def create_app():
     SESSION_COOKIE_SAMESITE='Lax',
    )
    
-   @app.route('/', methods=['GET'])
+   
    def home():
       return 'Hello world'
       
