@@ -10,7 +10,11 @@ def create_app():
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
    )
-
+   
+   @app.route('/', methods=['GET'])
+   def home():
+      return 'Hello world'
+      
    # Ruta de registro
    @app.route('/register', methods=['GET', 'POST'])
    def signup_user():
