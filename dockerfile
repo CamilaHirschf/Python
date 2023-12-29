@@ -8,5 +8,5 @@ EXPOSE 8080
 
 
 
-CMD ["gunicorn","--config", "gunicorn_config.py", "app:app"]
+
 CMD ["gunicorn","--config", "gunicorn_config.py", "app:create_app()"]
