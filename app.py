@@ -10,6 +10,11 @@ def create_app():
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
    )
+
+   @app.after_request
+   def apply_caching(response):
+      response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+      return response
    
    
    def home():
