@@ -1,8 +1,10 @@
 from flask import Flask
+from flask_wtf.csrf import CSRFProtect
 
-@app.route('/', methods=['GET'])
+
 def create_app():
    app = Flask(__name__)
+   csrf = CSRFProtect(app)
 
    # Configuración de seguridad
    app.config.update(
@@ -10,22 +12,8 @@ def create_app():
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
    )
-   def hello():
-   # Generate a new random nonce value for every response.
-      nonce = os.urandom(16).hex()
-   # Set the strict nonce-based CSP response header
-      csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
-      response = app.make_response(render_template_string("Hello World!"))
-      response.headers["Content-Security-Policy"] = csp
-      response.headers["Nonce"] = nonce
-      return response
    
-   @app.after_request
-   def apply_caching(response):
-      response.headers['X-Frame-Options'] = 'SAMEORIGIN'
-      return response
-   
-   
+   @app.route('/', methods=['GET'])
    def home():
       return 'Hello world'
       
