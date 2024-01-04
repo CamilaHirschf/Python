@@ -1,11 +1,17 @@
 from flask import Flask
 import os
 from flask import Flask, render_template_string
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+from flask import Flask, render_template, request
+from flask_wtf.csrf import CSRFProtect
+
 
 
 def create_app():
    app = Flask(__name__)
-   
+   csrf = CSRFProtect(app)
 
    # Configuración de seguridad
    app.config.update(
@@ -13,6 +19,18 @@ def create_app():
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
    )
+   class MyForm(FlaskForm):
+   name = StringField('Name', validators=[DataRequired()])
+   submit = SubmitField('Submit')
+
+   @app.route("/", methods=['GET', 'POST'])
+   def index():
+      form = MyForm()
+      if form.validate_on_submit():
+          return 'Success!'
+      return render_template('index.html', form=form)
+
+   
    @app.route("/")
    def hello():
    # Generate a new random nonce value for every response.
