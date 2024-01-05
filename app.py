@@ -28,7 +28,8 @@ def create_app():
 
  @app.before_request
  def log_request_info():
-   app.logger.info('Headers: %s', request.headers)
+   app.logger.info(f'"{request.method}" "{request.path}" "{request.remote_addr}"')
+   #app.logger.info('Headers: %s', request.headers)
    #app.logger.info('Body: %s', request.get_data())
 
  @app.route("/", methods=['GET', 'POST'])
