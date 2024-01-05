@@ -71,7 +71,7 @@ def create_app():
    response.headers["Content-Security-Policy"] = csp
    response.headers["Nonce"] = nonce
    response.headers['Server'] = ''
-   app.logger.info('"%s" "%s" "%s" "%s"', request.method, request.path, request.remote_addr, response.status, str(session["ctx"]))
+   app.logger.info('"%s" "%s" "%s" "%s" "%s"', request.method, request.path, request.remote_addr, response.status, str(session["ctx"]))
    return response
 
  # Add StreamHandler to the application's logger
