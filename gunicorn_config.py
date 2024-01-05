@@ -1,5 +1,5 @@
 import os
-import gunicorn
+
 
 workers = int(os.environ.get('GUNICORN_PROCESSES', '2'))
 
