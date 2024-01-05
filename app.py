@@ -4,8 +4,10 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
-import os
+from flask import Flask, request, session
 import logging
+import uuid
+import os
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
