@@ -4,7 +4,6 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
-from flask import make_response
 import os
 
 class MyForm(FlaskForm):
