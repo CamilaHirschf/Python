@@ -20,8 +20,8 @@ def create_app():
     SESSION_COOKIE_SAMESITE='Lax',
    )
    class MyForm(FlaskForm):
-   name = StringField('Name', validators=[DataRequired()])
-   submit = SubmitField('Submit')
+      name = StringField('Name', validators=[DataRequired()])
+      submit = SubmitField('Submit')
 
    @app.route("/", methods=['GET', 'POST'])
    def index():
