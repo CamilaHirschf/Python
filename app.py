@@ -7,7 +7,7 @@ from flask_talisman import Talisman
 import os
 import logging
 
-logging.basicConfig(filename='app.log', level=logging.INFO)
+logging.basicConfig(filename='./app.log', level=logging.INFO)
 
 class MyForm(FlaskForm):
  name = StringField('Name', validators=[DataRequired()])
