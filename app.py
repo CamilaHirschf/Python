@@ -31,7 +31,7 @@ def create_app():
  @app.before_request
  def log_request_info():
    session["ctx"] = {"request_id": str(uuid.uuid4())}
- app.logger.info('"%s" "%s" "%s" "%s"', request.method, request.path, request.remote_addr, str(session["ctx"]))
+   app.logger.info('"%s" "%s" "%s" "%s"', request.method, request.path, request.remote_addr, str(session["ctx"]))
    #app.logger.info('Headers: %s', request.headers)
    #app.logger.info('Body: %s', request.get_data())
 
@@ -71,7 +71,7 @@ def create_app():
    response.headers["Content-Security-Policy"] = csp
    response.headers["Nonce"] = nonce
    response.headers['Server'] = ''
-   app.logger.info('"%s" "%s" "%s" "%s"', request.path, request.method, response.status, response.content_length, session["ctx"])
+   app.logger.info('"%s" "%s" "%s" "%s"', request.method, request.path, response.status, str(session["ctx"]))
    return response
 
  # Add StreamHandler to the application's logger
