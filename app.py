@@ -41,8 +41,8 @@ def create_app():
 
  @app.route("/")
  def hello():
- logging.info('Hello page accessed')
- return render_template('index.html')
+  logging.info('Hello page accessed')
+  return render_template('index.html')
 
  @app.route('/', methods=['GET'])
  def home():
