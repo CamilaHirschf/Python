@@ -5,6 +5,9 @@ from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
 import os
+import logging
+
+logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
 class MyForm(FlaskForm):
@@ -23,6 +26,10 @@ def create_app():
    SESSION_COOKIE_SAMESITE='Lax',
  )
 
+  @app.before_request
+ def log_request_info():
+   app.logger.info('Headers: %s', request.headers)
+   app.logger.info('Body: %s', request.get_data())
 
  @app.route("/", methods=['GET', 'POST'])
  def index():
