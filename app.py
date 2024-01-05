@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
+from flask_talisman import Talisman
 import os
 
 class MyForm(FlaskForm):
@@ -11,6 +12,7 @@ class MyForm(FlaskForm):
 
 def create_app():
    app = Flask(__name__)
+   Talisman(app)
    app.config['SECRET_KEY'] = 'your-secret-key'
    csrf = CSRFProtect(app)
 
