@@ -1,8 +1,6 @@
 import os
 import gunicorn
 
-if gunicorn.version_info < (20, 1, 0):
-  gunicorn.SERVER_SOFTWARE = ""
 workers = int(os.environ.get('GUNICORN_PROCESSES', '2'))
 
 threads = int(os.environ.get('GUNICORN_THREADS', '4'))
