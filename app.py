@@ -31,12 +31,13 @@ def create_app():
 
    @app.route("/")
    def hello():
-       nonce = os.urandom(16).hex()
-       csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
-       response = app.make_response(render_template_string("Hello World!"))
-       response.headers["Content-Security-Policy"] = csp
-       response.headers["Nonce"] = nonce
-       return response
+     nonce = os.urandom(16).hex()
+     csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
+     response = make_response(render_template('index.html'))
+     response.headers["Content-Security-Policy"] = csp
+     response.headers["Nonce"] = nonce
+     return response
+
 
    @app.route('/', methods=['GET'])
    def home():
