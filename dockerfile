@@ -4,8 +4,9 @@ COPY requirements.txt /
 RUN pip3 install --upgrade pip
 RUN pip3 install -r /requirements.txt
 COPY . /app
+RUN chgrp -R 0 /app && \
+   chmod -R g=u /app
 WORKDIR /app
-RUN chmod -R 755 /app
 EXPOSE 8080
 
 
