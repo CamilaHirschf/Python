@@ -1,4 +1,5 @@
 import os
+import gunicorn
 
 
 
@@ -15,4 +16,4 @@ bind = os.environ.get('GUNICORN_BIND', '0.0.0.0:8080')
 forwarded_allow_ips = '*'
 
 secure_scheme_headers = { 'X-Forwarded-Proto': 'https' }
-gunicorn.SERVER_SOFTWARE = 'ninguno'
+gunicorn.SERVER_SOFTWARE = 'none'
