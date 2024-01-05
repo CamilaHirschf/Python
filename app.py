@@ -5,6 +5,9 @@ from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
 import os
+import logging
+
+logging.basicConfig(filename='app.log', level=logging.INFO)
 
 class MyForm(FlaskForm):
   name = StringField('Name', validators=[DataRequired()])
@@ -24,6 +27,7 @@ def create_app():
 
   @app.route("/", methods=['GET', 'POST'])
   def index():
+      logging.info('Index page accessed')
       form = MyForm()
       if form.validate_on_submit():
           return 'Success!'
