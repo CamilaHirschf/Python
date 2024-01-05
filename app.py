@@ -26,7 +26,7 @@ def create_app():
    SESSION_COOKIE_SAMESITE='Lax',
  )
 
-  @app.before_request
+ @app.before_request
  def log_request_info():
    app.logger.info('Headers: %s', request.headers)
    app.logger.info('Body: %s', request.get_data())
