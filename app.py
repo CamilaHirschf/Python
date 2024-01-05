@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
+from flask import make_response
 import os
 
 class MyForm(FlaskForm):
@@ -51,6 +52,7 @@ def create_app():
       csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
       response.headers["Content-Security-Policy"] = csp
       response.headers["Nonce"] = nonce
+      response.headers['Server'] = ''
       return response
 
   return app
