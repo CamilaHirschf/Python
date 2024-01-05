@@ -33,25 +33,31 @@ def create_app():
 
  @app.route("/", methods=['GET', 'POST'])
  def index():
+   logging.info('Index page accessed')
    form = MyForm()
    if form.validate_on_submit():
+       logging.info('Form submitted successfully')
        return 'Success!'
    return render_template('index.html', form=form)
 
  @app.route("/")
  def hello():
+  logging.info('Hello page accessed')
   return render_template('index.html')
 
  @app.route('/', methods=['GET'])
  def home():
+   logging.info('Home page accessed')
    return 'Hello world'
 
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
+   logging.info('Register page accessed')
    return 'Registration page'
 
  @app.route('/login', methods=['GET', 'POST']) 
  def login_user():
+   logging.info('Login page accessed')
    return 'Login page'
 
  @app.after_request
@@ -62,6 +68,10 @@ def create_app():
    response.headers["Nonce"] = nonce
    response.headers['Server'] = ''
    return response
+
+ # Add StreamHandler to the application's logger
+ stream_handler = logging.StreamHandler()
+ app.logger.addHandler(stream_handler)
 
  return app
 
