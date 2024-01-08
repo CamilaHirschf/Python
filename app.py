@@ -12,6 +12,15 @@ import os
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
+# Configuración de Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+class User(UserMixin):
+   def __init__(self, id, username, password):
+       self.id = id
+       self.username = username
+       self.password = password
 
 class MyForm(FlaskForm):
  name = StringField('Name', validators=[DataRequired()])
@@ -55,15 +64,38 @@ def create_app():
    logging.info('Home page accessed')
    return 'Hello world'
 
+ @login_manager.user_loader
+ def load_user(user_id):
+    # Aquí debes buscar al usuario en tu base de datos
+    user = User(user_id, 'username', 'password')
+    return user
+ 
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
-   logging.info('Register page accessed')
-   return 'Registration page'
+   if request.method == 'POST':
+       username = request.form.get('username')
+       password = generate_password_hash(request.form.get('password'), method='sha256')
+       # Aquí debes crear al usuario en tu base de datos
+   return render_template('register.html')
 
  @app.route('/login', methods=['GET', 'POST']) 
  def login_user():
-   logging.info('Login page accessed')
-   return 'Login page'
+   if request.method == 'POST':
+       username = request.form.get('username')
+       password = request.form.get('password')
+       # Aquí debes buscar al usuario en tu base de datos
+       user = User(1, 'username', 'password')
+       if user and check_password_hash(user.password, password):
+           login_user(user)
+           return redirect(url_for('dashboard'))
+   return render_template('login.html')
+
+ @app.route('/logout')
+ @login_required
+ def logout():
+    logout_user()
+    return redirect(url_for('index'))
+  
 
  @app.after_request
  def apply_csp(response):
