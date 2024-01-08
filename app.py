@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_login import LoginManager
 from flask_login import UserMixin
 from flask_login import login_required
+from flask_wtf import Form
 from flask_wtf import FlaskForm
 from datetime import datetime
 from wtforms import StringField, SubmitField
@@ -20,6 +21,9 @@ class User(UserMixin):
        self.id = id
        self.username = username
        self.password = password
+class LoginForm(Form):
+   username = StringField('Username')
+   password = PasswordField('Password')
 
 class MyForm(FlaskForm):
  name = StringField('Name', validators=[DataRequired()])
