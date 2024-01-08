@@ -73,6 +73,7 @@ def create_app():
    response.headers["Nonce"] = nonce
    response.headers['Server'] = ''
    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Agrega esta línea
+   session["ctx"] = {"request_id": str(uuid.uuid4())}
    app.logger.info('%s - "%s" "%s" "%s" "%s"', timestamp, request.method, request.path, request.remote_addr, str(session["ctx"]))
    return response
 
