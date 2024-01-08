@@ -88,7 +88,6 @@ def create_app():
        password = generate_password_hash(request.form.get('password'), method='sha256')
        # Aquí debes crear al usuario en tu base de datos
    return render_template('register.html')
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
    form = LoginForm()
@@ -100,11 +99,11 @@ def login():
            login_user(user)
            return redirect(url_for('dashboard'))
    return render_template('login.html', form=form)
-
- @app.route('/logout')
- @login_required
- def logout():
-    logout_user()
+   
+@app.route('/logout')
+@login_required
+def logout():
+   logout_user()
    return redirect(url_for('login'))
   
 
