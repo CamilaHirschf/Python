@@ -3,5 +3,4 @@ gunicorn==21.2.0
 flask-wtf==1.2.1
 flask_talisman==1.1.0
 Flask-Login==0.6.3
-Flask-BabelEx==0.9.4
 Flask-Security==3.0.0
