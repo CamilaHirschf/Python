@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask_login import LoginManager
 from flask_login import UserMixin
+from flask_login import login_required
 from flask_wtf import FlaskForm
 from datetime import datetime
 from wtforms import StringField, SubmitField
