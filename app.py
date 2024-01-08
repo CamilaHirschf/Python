@@ -37,7 +37,7 @@ def create_app():
  csrf = CSRFProtect(app)
  # Configuración de Flask-Login
  login_manager = LoginManager()
- login_manager.init_app(app)
+ login_manager.login_view = 'login'
 
  app.config.update(
    SESSION_COOKIE_SECURE=True,
@@ -101,7 +101,7 @@ def create_app():
  @login_required
  def logout():
     logout_user()
-    return redirect(url_for('index'))
+   return redirect(url_for('login'))
   
 
  @app.after_request
