@@ -49,12 +49,12 @@ def create_app():
 
  @app.route("/", methods=['GET', 'POST'])
  def index():
- logging.info('Index page accessed')
- form = MyForm()
- if form.validate_on_submit():
-     logging.info('Form submitted successfully')
-     return 'Success!'
- return render_template('index.html', form=form)
+  logging.info('Index page accessed')
+  form = MyForm()
+  if form.validate_on_submit():
+      logging.info('Form submitted successfully')
+      return 'Success!'
+  return render_template('index.html', form=form)
 
  @login_manager.user_loader
  def load_user(user_id):
@@ -64,25 +64,25 @@ def create_app():
  
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
- if request.method == 'POST':
-     username = request.form.get('username')
-     password = generate_password_hash(request.form.get('password'), method='sha256')
-     # Aquí debes crear al usuario en tu lista de usuarios
-     users.append({'id': len(users)+1, 'username': username, 'password': password})
-     return redirect(url_for('login'))
- return render_template('register.html')
+  if request.method == 'POST':
+      username = request.form.get('username')
+      password = generate_password_hash(request.form.get('password'), method='sha256')
+      # Aquí debes crear al usuario en tu lista de usuarios
+      users.append({'id': len(users)+1, 'username': username, 'password': password})
+      return redirect(url_for('login'))
+  return render_template('register.html')
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
- form = LoginForm()
- if form.validate_on_submit():
-     # Busca al usuario en la lista de usuarios
-     user = next((u for u in users if u['username'] == form.username.data), None)
-     if user and user['password'] == form.password.data:
-         # Inicia sesión del usuario
-         login_user(user)
-         return redirect(url_for('dashboard'))
- return render_template('login.html', form=form)
+  form = LoginForm()
+  if form.validate_on_submit():
+      # Busca al usuario en la lista de usuarios
+      user = next((u for u in users if u['username'] == form.username.data), None)
+      if user and user['password'] == form.password.data:
+          # Inicia sesión del usuario
+          login_user(user)
+          return redirect(url_for('dashboard'))
+  return render_template('login.html', form=form)
  
 @app.route('/logout')
 @login_required
@@ -93,15 +93,15 @@ def logout():
 
  @app.after_request
  def apply_csp(response):
- nonce = os.urandom(16).hex()
- csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
- response.headers["Content-Security-Policy"] = csp
- response.headers["Nonce"] = nonce
- response.headers['Server'] = ''
- timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Agrega esta línea
- session["ctx"] = {"request_id": str(uuid.uuid4())}
- app.logger.info('%s - "%s" "%s" "%s" "%s"', timestamp, request.method, request.path, request.remote_addr, str(session["ctx"]))
- return response
+  nonce = os.urandom(16).hex()
+  csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
+  response.headers["Content-Security-Policy"] = csp
+  response.headers["Nonce"] = nonce
+  response.headers['Server'] = ''
+  timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Agrega esta línea
+  session["ctx"] = {"request_id": str(uuid.uuid4())}
+  app.logger.info('%s - "%s" "%s" "%s" "%s"', timestamp, request.method, request.path, request.remote_addr, str(session["ctx"]))
+  return response
 
  # Add StreamHandler to the application's logger
  stream_handler = logging.StreamHandler()
