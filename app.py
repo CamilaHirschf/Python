@@ -16,7 +16,11 @@ import uuid
 import os
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-
+users = [
+   {'id': 1, 'username': 'user1', 'password': 'pass1'},
+   {'id': 2, 'username': 'user2', 'password': 'pass2'},
+   # Agrega más usuarios aquí
+]
 class User(UserMixin):
    def __init__(self, id, username, password):
        self.id = id
@@ -85,17 +89,17 @@ def create_app():
        # Aquí debes crear al usuario en tu base de datos
    return render_template('register.html')
 
- @app.route('/login', methods=['GET', 'POST']) 
- def login_user():
-   if request.method == 'POST':
-       username = request.form.get('username')
-       password = request.form.get('password')
-       # Aquí debes buscar al usuario en tu base de datos
-       user = User(1, 'username', 'password')
-       if user and check_password_hash(user.password, password):
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+   form = LoginForm()
+   if form.validate_on_submit():
+       # Busca al usuario en la lista de usuarios
+       user = next((u for u in users if u['username'] == form.username.data), None)
+       if user and user['password'] == form.password.data:
+           # Inicia sesión del usuario
            login_user(user)
            return redirect(url_for('dashboard'))
-   return render_template('login.html')
+   return render_template('login.html', form=form)
 
  @app.route('/logout')
  @login_required
