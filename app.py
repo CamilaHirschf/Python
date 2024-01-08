@@ -1,6 +1,3 @@
-from flask_login import LoginManager
-from flask_login import login_required
-from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from datetime import datetime
@@ -14,23 +11,8 @@ import uuid
 import os
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-# Configura Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(app)
 
-# Configura Flask-Security
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
 
-class Role(db.Model, RoleMixin):
- id = db.Column(db.Integer(), primary_key=True)
- name = db.Column(db.String(80), unique=True)
-
-class User(db.Model, UserMixin):
- id = db.Column(db.Integer, primary_key=True)
- email = db.Column(db.String(255), unique=True)
- password = db.Column(db.String(255))
- roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
 class MyForm(FlaskForm):
  name = StringField('Name', validators=[DataRequired()])
  submit = SubmitField('Submit')
@@ -73,36 +55,15 @@ def create_app():
    logging.info('Home page accessed')
    return 'Hello world'
 
- @app.route('/logout')
- @login_required
- def logout():
-   logout_user()
-   return redirect(url_for('index'))
- 
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
-   if request.method == 'POST':
-       email = request.form['email']
-       password = request.form['password']
-       user = User(email=email)
-       user.set_password(password)
-       db.session.add(user)
-       db.session.commit()
-       return redirect(url_for('login'))
-   return render_template('register.html')
+   logging.info('Register page accessed')
+   return 'Registration page'
 
  @app.route('/login', methods=['GET', 'POST']) 
  def login_user():
-   if request.method == 'POST':
-       email = request.form['email']
-       password = request.form['password']
-       user = User.query.filter_by(email=email).first()
-       if user and user.check_password(password):
-           login_user(user)
-           return redirect(url_for('dashboard'))
-       else:
-           flash('Invalid email or password')
-   return render_template('login.html')
+   logging.info('Login page accessed')
+   return 'Login page'
 
  @app.after_request
  def apply_csp(response):
