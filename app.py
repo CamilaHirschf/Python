@@ -13,10 +13,6 @@ import os
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-# Configuración de Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 class User(UserMixin):
    def __init__(self, id, username, password):
        self.id = id
@@ -32,6 +28,9 @@ def create_app():
  Talisman(app)
  app.config['SECRET_KEY'] = 'your-secret-key'
  csrf = CSRFProtect(app)
+ # Configuración de Flask-Login
+ login_manager = LoginManager()
+ login_manager.init_app(app)
 
  app.config.update(
    SESSION_COOKIE_SECURE=True,
