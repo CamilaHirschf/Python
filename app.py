@@ -48,7 +48,11 @@ def create_app():
    SESSION_COOKIE_HTTPONLY=True,
    SESSION_COOKIE_SAMESITE='Lax',
  )
-
+@app.route('/logout')
+ @login_required
+ def logout():
+    logout_user()
+   return redirect(url_for('login'))
  #@app.before_request
  #def log_request_info():
    #session["ctx"] = {"request_id": str(uuid.uuid4())}
@@ -101,11 +105,7 @@ def login():
            return redirect(url_for('dashboard'))
    return render_template('login.html', form=form)
 
- @app.route('/logout')
- @login_required
- def logout():
-    logout_user()
-   return redirect(url_for('login'))
+ 
   
 
  @app.after_request
