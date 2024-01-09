@@ -51,7 +51,8 @@ def create_app():
  def logout():
   logout_user()
   return redirect(url_for('login')
- @app.route("/", methods=['GET', 'POST'])
+                  
+ @app.route('/', methods=['GET', 'POST'])
  def index():
   logging.info('Index page accessed')
   form = MyForm()
