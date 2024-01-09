@@ -26,9 +26,9 @@ class User(UserMixin):
      self.username = username
      self.password = password
 
-class LoginForm(Form):
- username = StringField('Username')
- password = PasswordField('Password')
+class LoginForm(FlaskForm):
+  username = StringField('Username')
+  password = PasswordField('Password')
 
 class MyForm(FlaskForm):
    name = StringField('Name', validators=[DataRequired()])
