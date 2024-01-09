@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, SubmitField
