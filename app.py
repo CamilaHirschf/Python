@@ -80,8 +80,8 @@ def create_app():
   if request.method == 'POST':
       username = request.form.get('username')
       password = generate_password_hash(request.form.get('password'), method='sha256')
-      # Aquí debes crear al usuario en tu lista de usuarios
-      users.append({'id': len(users)+1, 'username': username, 'password': password})
+      new_user = User(len(users)+1, username, password)
+      users.append(new_user.__dict__)
       return redirect(url_for('login'))
   return render_template('register.html')
 
