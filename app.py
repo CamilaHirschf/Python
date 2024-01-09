@@ -89,8 +89,6 @@ def create_app():
           return redirect(url_for('dashboard'))
   return render_template('login.html', form=form)
  
-)
- 
 
  @app.after_request
  def apply_csp(response):
