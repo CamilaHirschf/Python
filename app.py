@@ -98,8 +98,12 @@ def create_app():
          login_user(user_instance)
          return redirect(url_for('dashboard'))
   return render_template('login.html', form=form)
- 
 
+ @app.route('/dashboard')
+ def dashboard():
+    # Aquí va el código para tu página de panel de control
+    return render_template('dashboard.html')
+ 
  @app.after_request
  def apply_csp(response):
   nonce = os.urandom(16).hex()
