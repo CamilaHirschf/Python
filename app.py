@@ -30,9 +30,9 @@ class LoginForm(Form):
  username = StringField('Username')
  password = PasswordField('Password')
 
-class MyForm(Form):
- name = StringField('Name', validators=[DataRequired()])
- submit = SubmitField('Submit')
+class MyForm(FlaskForm):
+   name = StringField('Name', validators=[DataRequired()])
+   submit = SubmitField('Submit')
 
 def create_app():
  app = Flask(__name__)
