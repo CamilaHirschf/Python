@@ -67,13 +67,13 @@ def create_app():
   return render_template('index.html', form=form)
 
  @login_manager.user_loader
-def load_user(user_id):
-   # Busca al usuario en la lista de usuarios
-   user_data = next((u for u in users if u['id'] == int(user_id)), None)
-   if user_data is not None:
-       return User(user_data['id'], user_data['username'], user_data['password'])
-   else:
-       return None
+ def load_user(user_id):
+    # Busca al usuario en la lista de usuarios
+    user_data = next((u for u in users if u['id'] == int(user_id)), None)
+    if user_data is not None:
+        return User(user_data['id'], user_data['username'], user_data['password'])
+    else:
+        return None
  
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
