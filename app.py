@@ -22,9 +22,9 @@ users = [
 
 class User(UserMixin):
    def __init__(self, id, username, password):
-       self.id = id
-       self.username = username
-       self.password = password
+    self.id = id
+    self.username = username
+    self.password = password
 
    def is_active(self):
        return True
