@@ -46,6 +46,11 @@ def create_app():
  SESSION_COOKIE_HTTPONLY=True,
  SESSION_COOKIE_SAMESITE='Lax',
  )
+ @app.route('/logout')
+ @login_required
+ def logout():
+ logout_user()
+ return redirect(url_for('login'))
  @app.route("/", methods=['GET', 'POST'])
  def index():
  logging.info('Index page accessed')
