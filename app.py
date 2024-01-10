@@ -78,13 +78,14 @@ def create_app():
  
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
+  form = MyForm()
   if request.method == 'POST':
-      username = request.form.get('username')
-      password = generate_password_hash(request.form.get('password'), method='sha256')
-      new_user = User(len(users)+1, username, password)
-      users.append(new_user.__dict__)
-      return redirect(url_for('login'))
-  return render_template('register.html')
+     username = request.form.get('username')
+     password = generate_password_hash(request.form.get('password'), method='sha256')
+     new_user = User(len(users)+1, username, password)
+     users.append(new_user.__dict__)
+     return redirect(url_for('login'))
+  return render_template('register.html', form=form)
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
