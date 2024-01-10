@@ -67,15 +67,15 @@ def create_app():
 
  @app.after_request
  def apply_csp(response):
-   nonce = os.urandom(16).hex()
-   csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
-   response.headers["Content-Security-Policy"] = csp
-   response.headers["Nonce"] = nonce
-   response.headers['Server'] = ''
-   timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Agrega esta línea
-   session["ctx"] = {"request_id": str(uuid.uuid4())}
-   app.logger.info('%s - "%s" "%s" "%s" "%s"', timestamp, request.method, request.path, request.remote_addr, str(session["ctx"]))
-   return response
+    nonce = os.urandom(16).hex()
+    csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
+    response.headers["Content-Security-Policy"] = csp
+    response.headers["Nonce"] = nonce
+    response.headers['Server'] = ''
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    session["ctx"] = {"request_id": str(uuid.uuid4())}
+    app.logger.info('%s - "%s" "%s" "%s" "%s"', timestamp, request.method, request.path, request.remote_addr, str(session["ctx"]))
+    return response
 
  # Add StreamHandler to the application's logger
  stream_handler = logging.StreamHandler()
