@@ -28,14 +28,19 @@ class MyForm(FlaskForm):
 
 def create_app():
  app = Flask(__name__)
+ 
  Talisman(app)
+
  app.config['SECRET_KEY'] = 'your-secret-key'
  csrf = CSRFProtect(app)
+
  app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
  db = SQLAlchemy(app)
+
  login_manager = LoginManager()
  login_manager.init_app(app)
  login_manager.login_view = 'login'
+
  class User(db.Model, UserMixin):
    id = db.Column(db.Integer, primary_key=True)
    username = db.Column(db.String(30), unique=True, nullable=False)
