@@ -34,7 +34,8 @@ class LoginForm(FlaskForm):
   password = PasswordField('Password')
 
 class MyForm(FlaskForm):
-   name = StringField('Name', validators=[DataRequired()])
+   username = StringField('Username', validators=[DataRequired()])
+   password = PasswordField('Password', validators=[DataRequired()])
    submit = SubmitField('Submit')
 
 def create_app():
