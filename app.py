@@ -14,11 +14,7 @@ import os
 from werkzeug.security import generate_password_hash
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-users = [
- User(1, 'user1', 'pass1'),
- User(2, 'user2', 'pass2'),
- # Agrega más usuarios aquí
-]
+
 
 class User(UserMixin):
  def __init__(self, id, username, password):
@@ -28,6 +24,12 @@ class User(UserMixin):
 
  def is_active(self):
      return True
+  
+users = [
+ User(1, 'user1', 'pass1'),
+ User(2, 'user2', 'pass2'),
+ # Agrega más usuarios aquí
+]
 
 class LoginForm(FlaskForm):
   username = StringField('Username')
