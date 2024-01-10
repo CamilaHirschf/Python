@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Iniciar Sesión</title>
+</head>
+<body>
+  <h2>Iniciar Sesión</h2>
+  <form action="/login" method="post">
+      {{ form.hidden_tag() }}
+      {{ form.username.label }} {{ form.username() }}
+      {{ form.password.label }} {{ form.password() }}
+      <input type="submit" value="Iniciar Sesión">
+  </form>
+</body>
+</html>
+
