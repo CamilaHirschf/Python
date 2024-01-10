@@ -73,9 +73,9 @@ def create_app():
  @login_manager.user_loader
  def load_user(user_id):
   # Busca al usuario en la lista de usuarios
-  user_data = next((u for u in users if u['id'] == int(user_id)), None)
-  if user_data is not None:
-      return User(user_data['id'], user_data['username'], user_data['password'])
+  user = next((u for u in users if u.id == int(user_id)), None)
+  if user is not None:
+   return User(user.id, user.username, user.password)
   else:
       return None
  
