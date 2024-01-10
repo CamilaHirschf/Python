@@ -61,12 +61,12 @@ def create_app():
                 
  @app.route('/', methods=['GET', 'POST'])
  def index():
- logging.info('Index page accessed')
- form = MyForm()
- if form.validate_on_submit():
-     logging.info('Form submitted successfully')
-     return 'Success!'
- return render_template('index.html', form=form)
+    logging.info('Index page accessed')
+    form = MyForm()
+    if form.validate_on_submit():
+        logging.info('Form submitted successfully')
+        return 'Success!'
+    return render_template('index.html', form=form)
 
  @login_manager.user_loader
  def load_user(user_id):
@@ -74,15 +74,15 @@ def create_app():
 
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
- form = MyForm()
- if form.validate_on_submit():
-  username = request.form.get('username')
-  password = generate_password_hash(request.form.get('password'))
-  new_user = User(username=username, password_hash=password)
-  db.session.add(new_user)
-  db.session.commit()
-  return redirect(url_for('login'))
- return render_template('register.html', form=form)
+    form = MyForm()
+    if form.validate_on_submit():
+        username = request.form.get('username')
+        password = generate_password_hash(request.form.get('password'))
+        new_user = User(username=username, password_hash=password)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
@@ -101,25 +101,20 @@ def create_app():
 
  @app.after_request
  def apply_csp(response):
- nonce = os.urandom(16).hex()
- csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
- response.headers["Content-Security-Policy"] = csp
- response.headers["Nonce"] = nonce
- response.headers['Server'] = ''
- timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
- session["ctx"] = {"request_id": str(uuid.uuid4())}
- app.logger.info('%s - "%s" "%s" "%s" "%s"', timestamp, request.method, request.path, request.remote_addr, str(session["ctx"]))
- return response
+    nonce = os.urandom(16).hex()
+    csp = f"default-src 'self'; script-src 'nonce-{nonce}'; object-src 'none'; base-uri 'none'"
+    response.headers["Content-Security-Policy"] = csp
+    response.headers["Nonce"] = nonce
+    response.headers['Server'] = ''
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    session["ctx"] = {"request_id": str(uuid.uuid4())}
+    app.logger.info('%s - "%s" "%s" "%s" "%s"', timestamp, request.method, request.path, request.remote_addr, str(session["ctx"]))
+    return response
 
  stream_handler = logging.StreamHandler()
  app.logger.addHandler(stream_handler)
 
  with app.app_context():
- db.create_all()
+  db.create_all()
 
  return app
-
-
-
-
-
