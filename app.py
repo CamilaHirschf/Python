@@ -82,7 +82,7 @@ def create_app():
   form = MyForm()
   if request.method == 'POST':
      username = request.form.get('username')
-     password = generate_password_hash(request.form.get('password'), method='sha256')
+     password = generate_password_hash(request.form.get('password'))
      new_user = User(len(users)+1, username, password)
      users.append(new_user.__dict__)
      return redirect(url_for('login'))
