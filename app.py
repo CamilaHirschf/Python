@@ -93,10 +93,12 @@ def create_app():
  def login():
   form = LoginForm()
   if form.validate_on_submit():
-   user = next((u for u in users if u['username'] == form.username.data), None)
-   if user and check_password_hash(user['password'], form.password.data):
-       login_user(user)
-       return redirect(url_for('dashboard'))
+  # Busca al usuario en la lista de usuarios
+  user = next((u for u in users if u.username == form.username.data), None)
+  if user and check_password_hash(user.password, form.password.data):
+      # Inicia sesión del usuario
+      login_user(user)
+      return redirect(url_for('dashboard'))
   return render_template('login.html', form=form)
 
  @app.route('/dashboard')
