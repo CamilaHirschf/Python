@@ -16,16 +16,6 @@ from werkzeug.security import generate_password_hash
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-class User(db.Model, UserMixin):
-  id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(30), unique=True, nullable=False)
-  password_hash = db.Column(db.String(128))
-
-  def set_password(self, password):
-      self.password_hash = generate_password_hash(password)
-
-  def check_password(self, password):
-      return check_password_hash(self.password_hash, password)
 
 class LoginForm(FlaskForm):
  username = StringField('Username')
@@ -46,6 +36,16 @@ def create_app():
  login_manager = LoginManager()
  login_manager.init_app(app)
  login_manager.login_view = 'login'
+ class User(db.Model, UserMixin):
+   id = db.Column(db.Integer, primary_key=True)
+   username = db.Column(db.String(30), unique=True, nullable=False)
+   password_hash = db.Column(db.String(128))
+
+   def set_password(self, password):
+       self.password_hash = generate_password_hash(password)
+
+   def check_password(self, password):
+       return check_password_hash(self.password_hash, password)
 
  app.config.update(
  SESSION_COOKIE_SECURE=True,
