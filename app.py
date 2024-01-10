@@ -15,8 +15,8 @@ from werkzeug.security import generate_password_hash
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 users = [
- {'id': 1, 'username': 'user1', 'password': 'pass1'},
- {'id': 2, 'username': 'user2', 'password': 'pass2'},
+ User(1, 'user1', 'pass1'),
+ User(2, 'user2', 'pass2'),
  # Agrega más usuarios aquí
 ]
 
@@ -80,11 +80,11 @@ def create_app():
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
   form = MyForm()
-  if form.validate_on_submit():
+   if form.validate_on_submit():
    username = request.form.get('username')
    password = generate_password_hash(request.form.get('password'))
-   new_user = User(len(users)+1, username, password)
-   users.append(new_user) # Agrega la instancia del usuario, no su diccionario
+   new_user = {'id': len(users) + 1, 'username': username, 'password': password}
+   users.append(new_user) # Agrega el diccionario del usuario
    return redirect(url_for('login'))
   return render_template('register.html', form=form)
 
@@ -96,8 +96,8 @@ def create_app():
   # Busca al usuario en la lista de usuarios
    user = next((u for u in users if u.username == form.username.data), None)
    if user and check_password_hash(user.password, form.password.data):
-     login_user(user)
-     return redirect(url_for('dashboard'))
+    login_user(user)
+    return redirect(url_for('dashboard'))
   return render_template('login.html', form=form)
 
 
