@@ -81,8 +81,8 @@ def create_app():
   if form.validate_on_submit():
    username = request.form.get('username')
    password = generate_password_hash(request.form.get('password'))
-   new_user = {'id': len(users) + 1, 'username': username, 'password': password}
-   users.append(new_user) # Agrega el diccionario del usuario
+   new_user = User(len(users) + 1, username, password)
+   users.append(new_user) # Agrega el objeto del usuario
    return redirect(url_for('login'))
   return render_template('register.html', form=form)
 
