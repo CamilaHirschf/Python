@@ -84,10 +84,10 @@ def create_app():
    username = request.form.get('username')
    password = generate_password_hash(request.form.get('password'))
    new_user = User(len(users)+1, username, password)
-   users.append(new_user.__dict__)
-   print(users) # Imprime la lista de usuarios
-   return redirect(url_for('dashboard'))
+   users.append(new_user) # Agrega la instancia del usuario, no su diccionario
+   return redirect(url_for('login'))
   return render_template('register.html', form=form)
+
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
