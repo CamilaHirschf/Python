@@ -80,7 +80,7 @@ def create_app():
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
   form = MyForm()
-  if request.method == 'POST':
+  if form.validate_on_submit():
      username = request.form.get('username')
      password = generate_password_hash(request.form.get('password'))
      new_user = User(len(users)+1, username, password)
