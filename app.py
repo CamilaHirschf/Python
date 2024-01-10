@@ -72,12 +72,8 @@ def create_app():
 
  @login_manager.user_loader
  def load_user(user_id):
-  # Busca al usuario en la lista de usuarios
-  user = next((u for u in users if u.id == int(user_id)), None)
-  if user is not None:
-   return User(user.id, user.username, user.password)
-  else:
-      return None
+    return next((u for u in users if u.id == int(user_id)), None)
+
  
  @app.route('/register', methods=['GET', 'POST'])
  def signup_user():
@@ -93,14 +89,13 @@ def create_app():
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
-  form = LoginForm()
-  if form.validate_on_submit():
-   # Busca al usuario en la lista de usuarios
-   user = next((u for u in users if u.username == form.username.data), None)
-   if user and check_password_hash(user.password, form.password.data):
-      login_user(user)
-      return redirect(url_for('dashboard'))
-  return render_template('login.html', form=form)
+   form = LoginForm()
+   if form.validate_on_submit():
+       user = next((u for u in users if u.username == form.username.data), None)
+       if user and check_password_hash(user.password, form.password.data):
+           login_user(user)
+           return redirect(url_for('dashboard'))
+   return render_template('login.html', form=form)
 
 
  @app.route('/dashboard')
