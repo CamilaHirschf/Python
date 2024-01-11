@@ -69,6 +69,7 @@ def create_app():
 
  @app.route('/register', methods=['GET', 'POST'])
  def register():
+  form = MyForm()
   if request.method == 'POST':
    username = request.form.get('username')
    password = request.form.get('password')
@@ -81,7 +82,7 @@ def create_app():
    db.session.commit()
    flash('Registered successfully')
    return redirect(url_for('login'))
-  return render_template('register.html')
+  return render_template('register.html', form=form)
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
