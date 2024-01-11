@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
-from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import Form
 from werkzeug.security import check_password_hash
 from wtforms import StringField, PasswordField, SubmitField
@@ -13,6 +12,7 @@ import logging
 import uuid
 import os
 from werkzeug.security import generate_password_hash
+from db import db
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -30,12 +30,12 @@ def create_app():
  app = Flask(__name__)
  
  Talisman(app)
-
+ 
  app.config['SECRET_KEY'] = 'your-secret-key'
  csrf = CSRFProtect(app)
-
+ 
  app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
- db = SQLAlchemy(app)
+ db.init_app(app)
 
  login_manager = LoginManager()
  login_manager.init_app(app)
