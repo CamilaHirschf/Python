@@ -67,17 +67,21 @@ def create_app():
  def load_user(user_id):
    return User.query.get(int(user_id))
 
- @app.route('/register', methods=['GET', 'POST'])
- def signup_user():
-    form = MyForm()
-    if form.validate_on_submit():
-        username = request.form.get('username')
-        password = generate_password_hash(request.form.get('password'))
-        new_user = User(username=username, password_hash=password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
-    return render_template('register.html', form=form)
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+if request.method == 'POST':
+    username = request.form.get('username')
+    password = request.form.get('password')
+    if User.query.filter_by(username=username).first() is not None:
+        flash('Username already exists')
+        return redirect(url_for('register'))
+    new_user = User(username=username)
+    new_user.set_password(password)
+    db.session.add(new_user)
+    db.session.commit()
+    flash('Registered successfully')
+    return redirect(url_for('login'))
+return render_template('register.html')
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
