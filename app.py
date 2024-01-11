@@ -13,6 +13,7 @@ import uuid
 import os
 from werkzeug.security import generate_password_hash
 from db import db
+from db import User
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
