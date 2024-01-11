@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_wtf import Form
 from werkzeug.security import check_password_hash
