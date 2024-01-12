@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_wtf import Form
+from wtforms.validators import Regexp
 from werkzeug.security import check_password_hash
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
@@ -23,9 +24,9 @@ class LoginForm(FlaskForm):
  password = PasswordField('Password')
 
 class MyForm(FlaskForm):
-  username = StringField('Username', validators=[DataRequired()])
-  password = PasswordField('Password', validators=[DataRequired()])
-  submit = SubmitField('Submit')
+ username = StringField('Username', validators=[DataRequired(), Length(min=4, max=15)])
+ password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=16), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')])
+ submit = SubmitField('Submit')
 
 def create_app():
  app = Flask(__name__)
