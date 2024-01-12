@@ -25,7 +25,7 @@ class LoginForm(FlaskForm):
 
 class MyForm(FlaskForm):
  username = StringField('Username', validators=[DataRequired(), Length(min=4, max=15)])
- password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=16), Regexp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')])
+ password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=16), Regexp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$')])
  submit = SubmitField('Submit')
 
 def create_app():
