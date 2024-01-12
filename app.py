@@ -49,6 +49,10 @@ def create_app():
  SESSION_COOKIE_SAMESITE='Lax',
  )
 
+ @app.errorhandler(Exception)
+ def handle_exception(e):
+   return render_template('error.html'), 500
+
  @app.route('/logout')
  @login_required
  def logout():
