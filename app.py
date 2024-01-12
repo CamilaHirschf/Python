@@ -71,9 +71,9 @@ def create_app():
  @app.route('/register', methods=['GET', 'POST'])
  def register():
   form = MyForm()
-  if request.method == 'POST':
-   username = request.form.get('username')
-   password = request.form.get('password')
+  if form.validate_on_submit():
+   username = form.username.data
+   password = form.password.data
    if User.query.filter_by(username=username).first() is not None:
     flash('Username already exists')
     return render_template('register.html', form=form)
