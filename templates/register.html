@@ -5,23 +5,24 @@
 </head>
 <body>
  <h2>Registrarse</h2>
- {% with messages = get_flashed_messages() %}
-  {% if messages %}
-   {% for message in messages %}
-     <div class="alert alert-info">
-       {{ message }}
-     </div>
-   {% endfor %}
-  {% endif %}
+ {% with messages = get_flashed_messages(with_categories=true) %}
+ {% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-info">
+      {{ message }}
+    </div>
+  {% endfor %}
+ {% endif %}
  {% endwith %}
  <form action="/register" method="post">
-     {{ form.hidden_tag() }}
-     {{ form.username.label }} {{ form.username() }}
-     {{ form.password.label }} {{ form.password() }}
-     <input type="submit" value="Registrarse">
+    {{ form.hidden_tag() }}
+    {{ form.username.label }} {{ form.username() }}
+    {{ form.password.label }} {{ form.password() }}
+    <input type="submit" value="Registrarse">
  </form>
 </body>
 </html>
+
 
 
 
