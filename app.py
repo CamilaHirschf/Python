@@ -74,7 +74,7 @@ def create_app():
    username = request.form.get('username')
    password = request.form.get('password')
    if User.query.filter_by(username=username).first() is not None:
-    flash('Username already exists')
+    return flash('Username already exists')
    new_user = User(username=username)
    new_user.set_password(password)
    db.session.add(new_user)
