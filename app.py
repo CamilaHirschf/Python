@@ -4,7 +4,7 @@ from flask_wtf import Form
 from wtforms.validators import Regexp
 from werkzeug.security import check_password_hash
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from datetime import datetime
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
