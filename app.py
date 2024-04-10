@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_wtf import Form
+from wtforms.validators import Regexp
 from werkzeug.security import check_password_hash
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from datetime import datetime
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
@@ -23,9 +24,9 @@ class LoginForm(FlaskForm):
  password = PasswordField('Password')
 
 class MyForm(FlaskForm):
-  username = StringField('Username', validators=[DataRequired()])
-  password = PasswordField('Password', validators=[DataRequired()])
-  submit = SubmitField('Submit')
+ username = StringField('Username', validators=[DataRequired(), Length(min=4, max=15)], render_kw={"maxlength": 10})
+ password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=16), Regexp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$')], render_kw={"maxlength": 16})
+ submit = SubmitField('Submit')
 
 def create_app():
  app = Flask(__name__)
@@ -48,6 +49,10 @@ def create_app():
  SESSION_COOKIE_SAMESITE='Lax',
  )
 
+ @app.errorhandler(Exception)
+ def handle_exception(e):
+   return render_template('error.html'), 500
+
  @app.route('/logout')
  @login_required
  def logout():
@@ -68,16 +73,21 @@ def create_app():
    return User.query.get(int(user_id))
 
  @app.route('/register', methods=['GET', 'POST'])
- def signup_user():
-    form = MyForm()
-    if form.validate_on_submit():
-        username = request.form.get('username')
-        password = generate_password_hash(request.form.get('password'))
-        new_user = User(username=username, password_hash=password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
+ def register():
+  form = MyForm()
+  if form.validate_on_submit():
+   username = form.username.data
+   password = form.password.data
+   if User.query.filter_by(username=username).first() is not None:
+    flash('Username already exists')
     return render_template('register.html', form=form)
+   new_user = User(username=username)
+   new_user.set_password(password)
+   db.session.add(new_user)
+   db.session.commit()
+   flash('Registered successfully')
+   return redirect(url_for('login'))
+  return render_template('register.html', form=form)
 
  @app.route('/login', methods=['GET', 'POST'])
  def login():
